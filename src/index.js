@@ -84,6 +84,7 @@ async function fetchReport(data) {
     const response = await openai.chat.completions.create({
       model: "gpt-4",
       messages: messages,
+      temperature: 1.1,
     });
     renderReport(response.choices[0].message.content);
   } catch (err) {
