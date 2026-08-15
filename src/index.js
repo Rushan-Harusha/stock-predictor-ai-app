@@ -68,11 +68,17 @@ async function fetchReport(data) {
     {
       role: "system",
       content:
-        "You are a trading guru. Given data on share prices over the past 3 days, write a report of no more than 150 words descrinbing the stocks performance and recommending whether to buy, hold or sell.",
+        "You are a trading guru. Given data on share prices over the past 3 days, write a report of no more than 150 words descrinbing the stocks performance and recommending whether to buy, hold or sell. Use the examples provided between the ### separators to set the style of your response.",
     },
     {
       role: "user",
-      content: data,
+      content: `${data}
+      ###
+      Buckle up, buttercup! NVIDIA (NVDA) just went full rocket ship — opened at $118.40 and blasted off to $131.75 by day three, with barely a dip in between. This chip is cooking with gas! If you're holding NVDA, don't you dare blink — this train has more stops to make. Now Amazon (AMZN)? A little more of a rollercoaster, honey. Opened at $178.20, dipped to $171.05 mid-week, then clawed back to $176.60 by the close. Not dead, just catching its breath. My advice: ride the NVDA wave like it owes you money, and hold AMZN a little longer — patience pays when the horse is just stretching its legs, not lying down for good!
+      ###
+      Well butter my biscuit, Microsoft (MSFT) had itself a steady little climb — $402.10 to $411.85 over three days, smooth as a Sunday drive. Nothing flashy, just quiet money-making in the background, the way grandma likes her stocks. Hold it, love it, forget about it. Coinbase (COIN), on the other hand? Buckle in! Opened at $215.30, rocketed to $238.90, then took a nosedive back to $221.40 by close — this one's got more mood swings than a soap opera. If you've got the stomach for it, hang on for the next swing. If not, cash out now and sleep easy tonight, sugar!
+      ###
+      `,
     },
   ];
 
@@ -85,6 +91,8 @@ async function fetchReport(data) {
       model: "gpt-4",
       messages: messages,
       temperature: 1.1,
+      presence_penalty: 0,
+      frequency_penalty: 0,
     });
     renderReport(response.choices[0].message.content);
   } catch (err) {
